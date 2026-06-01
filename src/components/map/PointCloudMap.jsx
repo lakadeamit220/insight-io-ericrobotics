@@ -13,7 +13,6 @@ const PointCloud = ({ url }) => {
   useMemo(() => {
     geometry.computeVertexNormals();
     geometry.center();
-    geometry.scale(10, 10, 10);
   }, [geometry]);
 
   return (
@@ -69,10 +68,14 @@ const FallbackLoading = () => (
 const PointCloudMap = () => {
   return (
     <div className="absolute inset-0 w-full h-full cursor-crosshair active:cursor-crosshair z-0">
-      <Canvas camera={{ position: [0, 10, 5], fov: 45 }}>
+      <Canvas camera={{ position: [0, 5, 10], fov: 50 }}>
         <color attach="background" args={['#e5e5e5']} />
         <ambientLight intensity={0.8} />
         <directionalLight position={[10, 10, 5]} intensity={1} />
+        
+        {/* Debug Helpers to see the 3D space */}
+        <gridHelper args={[20, 20, 0x444444, 0x888888]} />
+        <axesHelper args={[5]} />
         
         <Suspense fallback={<FallbackLoading />}>
           <PointCloud url="/models/pointcloud.ply" />
