@@ -10,6 +10,14 @@ const useRobotStore = create((set) => ({
   mode: 'AUTO',
   connectionStatus: 'CONNECTED', // CONNECTED, CONNECTING, DISCONNECTED
   waypoint: null, // [x, y, z] coordinates
+  activeKeys: { w: false, a: false, s: false, d: false },
+  activeView: 'dashboard', // dashboard, camera, map, analytics, settings
+  
+  setActiveView: (view) => set({ activeView: view }),
+  
+  setKey: (key, isPressed) => set((state) => ({ 
+    activeKeys: { ...state.activeKeys, [key]: isPressed } 
+  })),
   
   setWaypoint: (point) => set({ waypoint: point }),
   

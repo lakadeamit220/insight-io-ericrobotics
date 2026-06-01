@@ -5,8 +5,7 @@ import useRobotStore from '../../store/useRobotStore';
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
-  const [activeTab, setActiveTab] = useState('dashboard');
-  const connectionStatus = useRobotStore(state => state.connectionStatus);
+  const { connectionStatus, activeView, setActiveView } = useRobotStore();
 
   const menuItems = [
     { id: 'dashboard', icon: LayoutDashboard, label: 'Dashboard' },
@@ -47,12 +46,12 @@ const Sidebar = () => {
       <div className="flex-1 px-4 py-6 space-y-2">
         {menuItems.map((item) => {
           const Icon = item.icon;
-          const isActive = activeTab === item.id;
+          const isActive = activeView === item.id;
           
           return (
             <motion.button
               key={item.id}
-              onClick={() => setActiveTab(item.id)}
+              onClick={() => setActiveView(item.id)}
               whileHover={{ scale: 1.02, backgroundColor: isActive ? 'rgba(59, 130, 246, 0.15)' : 'rgba(59, 130, 246, 0.1)' }}
               whileTap={{ scale: 0.98 }}
               className={`w-full flex items-center p-3 rounded-xl transition-colors group ${isActive ? 'bg-blue-50 text-blue-700' : 'text-slate-500 hover:text-slate-900'}`}
