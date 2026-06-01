@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { LayoutDashboard, Camera, Map, BarChart3, Settings, ChevronRight, ChevronLeft } from 'lucide-react';
+import useRobotStore from '../../store/useRobotStore';
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
+  const connectionStatus = useRobotStore(state => state.connectionStatus);
 
   const menuItems = [
     { id: 'dashboard', icon: LayoutDashboard, label: 'Dashboard' },
@@ -70,7 +72,7 @@ const Sidebar = () => {
         {isOpen ? <ChevronLeft size={16} /> : <ChevronRight size={16} />}
       </button>
 
-      <div className="p-4 border-t border-[var(--color-panel-border)]">
+      <div className="p-4 border-t border-[var(--color-panel-border)] flex flex-col gap-4">
         <div className="flex items-center gap-3 p-2">
           <div className="w-10 h-10 rounded-full bg-slate-200 flex-shrink-0"></div>
           <motion.div 
@@ -81,6 +83,20 @@ const Sidebar = () => {
             <p className="text-xs font-medium text-slate-500">ERIC Robotics</p>
           </motion.div>
         </div>
+        
+        {/* ROS Bridge Status */}
+        <motion.div 
+          animate={{ opacity: isOpen ? 1 : 0, width: isOpen ? "auto" : 0, display: isOpen ? "flex" : "none" }}
+          className="items-center gap-2 px-2 overflow-hidden whitespace-nowrap"
+        >
+          <div className="relative flex items-center justify-center">
+            <span className={`absolute inline-flex h-2 w-2 rounded-full opacity-75 ${connectionStatus === 'CONNECTED' ? 'bg-green-400 animate-ping' : 'bg-red-500'}`}></span>
+            <span className={`relative inline-flex rounded-full h-1.5 w-1.5 ${connectionStatus === 'CONNECTED' ? 'bg-green-500' : 'bg-red-600'}`}></span>
+          </div>
+          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+            {connectionStatus === 'CONNECTED' ? 'ROS Bridge Active' : 'ROS Bridge Offline'}
+          </p>
+        </motion.div>
       </div>
     </motion.div>
   );

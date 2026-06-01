@@ -4,8 +4,11 @@ import CameraFeed from './components/camera/CameraFeed';
 import PointCloudMap from './components/map/PointCloudMap';
 import StatusPills from './components/ui/StatusPills';
 import Controls from './components/ui/Controls';
+import { useRosTelemetry } from './hooks/useRosTelemetry';
 
 function App() {
+  useRosTelemetry(); // Initialize mock ROS bridge
+
   return (
     <DashboardLayout>
       {/* Background 3D Map Layer */}
