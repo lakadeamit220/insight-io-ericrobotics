@@ -5,6 +5,7 @@ import useRobotStore from '../../store/useRobotStore';
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
+  const [activeTab, setActiveTab] = useState('dashboard');
   const connectionStatus = useRobotStore(state => state.connectionStatus);
 
   const menuItems = [
@@ -46,14 +47,17 @@ const Sidebar = () => {
       <div className="flex-1 px-4 py-6 space-y-2">
         {menuItems.map((item) => {
           const Icon = item.icon;
+          const isActive = activeTab === item.id;
+          
           return (
             <motion.button
               key={item.id}
-              whileHover={{ scale: 1.02, backgroundColor: 'rgba(59, 130, 246, 0.1)' }}
+              onClick={() => setActiveTab(item.id)}
+              whileHover={{ scale: 1.02, backgroundColor: isActive ? 'rgba(59, 130, 246, 0.15)' : 'rgba(59, 130, 246, 0.1)' }}
               whileTap={{ scale: 0.98 }}
-              className={`w-full flex items-center p-3 rounded-xl transition-colors text-slate-500 hover:text-slate-900 group`}
+              className={`w-full flex items-center p-3 rounded-xl transition-colors group ${isActive ? 'bg-blue-50 text-blue-700' : 'text-slate-500 hover:text-slate-900'}`}
             >
-              <Icon size={22} className="group-hover:text-blue-600 transition-colors shrink-0" />
+              <Icon size={22} className={`shrink-0 transition-colors ${isActive ? 'text-blue-600' : 'group-hover:text-blue-600'}`} />
               <motion.span 
                 animate={{ opacity: isOpen ? 1 : 0, width: isOpen ? "auto" : 0 }}
                 className="ml-4 font-medium whitespace-nowrap overflow-hidden"
