@@ -9,6 +9,9 @@ const useRobotStore = create((set) => ({
   isEmergencyStop: false,
   mode: 'AUTO',
   connectionStatus: 'CONNECTED', // CONNECTED, CONNECTING, DISCONNECTED
+  waypoint: null, // [x, y, z] coordinates
+  
+  setWaypoint: (point) => set({ waypoint: point }),
   
   toggleEmergencyStop: () => set((state) => {
     const isEStop = !state.isEmergencyStop;
