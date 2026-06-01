@@ -2,31 +2,35 @@ import { useEffect } from 'react';
 import useRobotStore from '../store/useRobotStore';
 
 export const useHotkeys = () => {
-  const { toggleEmergencyStop, mode, setMode, setKey } = useRobotStore();
+  const toggleEmergencyStop = useRobotStore(state => state.toggleEmergencyStop);
+  const setMode = useRobotStore(state => state.setMode);
+  const setKey = useRobotStore(state => state.setKey);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
-      // Prevent scrolling when pressing spacebar
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      
+      const key = e.key.toLowerCase();
+      
       if (e.code === 'Space') {
         e.preventDefault();
         toggleEmergencyStop();
       }
       
-      if (e.code === 'KeyM') {
+      if (key === 'm') {
         setMode(useRobotStore.getState().mode === 'AUTO' ? 'MANUAL' : 'AUTO');
       }
 
-      if (e.code === 'KeyW') setKey('w', true);
-      if (e.code === 'KeyA') setKey('a', true);
-      if (e.code === 'KeyS') setKey('s', true);
-      if (e.code === 'KeyD') setKey('d', true);
+      if (['w', 'a', 's', 'd'].includes(key)) {
+        setKey(key, true);
+      }
     };
 
     const handleKeyUp = (e) => {
-      if (e.code === 'KeyW') setKey('w', false);
-      if (e.code === 'KeyA') setKey('a', false);
-      if (e.code === 'KeyS') setKey('s', false);
-      if (e.code === 'KeyD') setKey('d', false);
+      const key = e.key.toLowerCase();
+      if (['w', 'a', 's', 'd'].includes(key)) {
+        setKey(key, false);
+      }
     };
 
     window.addEventListener('keydown', handleKeyDown);
@@ -36,5 +40,5 @@ export const useHotkeys = () => {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
     };
-  }, [toggleEmergencyStop, setKey]);
+  }, [toggleEmergencyStop, setMode, setKey]);
 };
