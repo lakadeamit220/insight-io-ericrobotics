@@ -1,5 +1,10 @@
 # Insight.IO - ERIC Robotics Dashboard Recreation
 
+### What is this project?
+Imagine you are controlling a drone or a remote-controlled robot. You need a computer screen (a "dashboard") to see what the robot sees, check its battery, and tell it where to go. 
+
+This project is exactly that: a web-based control panel for a robot. It shows a live video feed, real-time battery and speed data, and a 3D map of the environment. While the robot in this project is "simulated" (using fake data for testing), the dashboard itself is built using the exact same professional tools that companies use to build real software.
+
 This project is a high-fidelity, self-hosted recreation of the ERIC Robotics Insight.IO dashboard. It features a live camera feed, an interactive 3D point cloud visualization, and robotics telemetry panels.
 
 ## Developer Contact
@@ -67,5 +72,7 @@ src/
 └── index.css         # Tailwind v4 configuration and global themes
 ```
 
-## Demo
-*(Include a link to your Loom video or screenshots here before submitting!)*
+## Demo Video
+You can watch a full video demonstration of this project working in real-time here:
+
+🎥 [**Click here to watch the Demo Video on Google Drive**](https://drive.google.com/file/d/1gcryUicZ3Uwt8_FupiAZsh82Rdo6hsPn/view?usp=sharing)
