@@ -25,12 +25,12 @@ const PointCloud = ({ url }) => {
       }}
     >
       <pointsMaterial 
-        size={0.05} 
+        size={0.2} 
         vertexColors={geometry.hasAttribute('color')}
-        color={geometry.hasAttribute('color') ? undefined : 0x111111}
+        color={geometry.hasAttribute('color') ? undefined : 0x3b82f6}
         sizeAttenuation={true}
-        transparent={true}
-        opacity={0.8}
+        transparent={false}
+        opacity={1}
       />
     </points>
   );

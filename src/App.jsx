@@ -32,17 +32,20 @@ function App() {
   );
 
   const renderCameraView = () => (
-    <div className="h-full w-full bg-slate-900 flex items-center justify-center p-8 overflow-hidden relative">
-      <div className="absolute top-8 left-8 pointer-events-auto z-10">
-        <StatusPills />
-      </div>
-      <div className="scale-150 origin-center pointer-events-auto">
+    <div className="h-full w-full bg-slate-50 flex items-center justify-center p-8">
+      <div className="scale-150 origin-center pointer-events-auto shadow-[0_20px_50px_rgba(0,0,0,0.15)] ring-4 ring-slate-200/50 rounded-[24px] overflow-hidden bg-white p-2">
         <CameraFeed />
       </div>
-      <div className="absolute bottom-8 right-8 pointer-events-auto z-10">
-        <Controls />
-      </div>
     </div>
+  );
+
+  const renderMapView = () => (
+    <>
+      <PointCloudMap />
+      <div className="absolute inset-0 z-10 pointer-events-none p-8 flex flex-col justify-between">
+        <StatusPills />
+      </div>
+    </>
   );
 
   const renderAnalyticsView = () => (
@@ -59,6 +62,7 @@ function App() {
       case 'dashboard': return renderDashboardView();
       case 'camera': return renderCameraView();
       case 'analytics': return renderAnalyticsView();
+      case 'map': return renderMapView();
       default: return (
         <div className="flex h-full items-center justify-center text-slate-400 flex-col gap-4 bg-slate-50">
           <h2 className="text-xl font-bold">Module Under Construction</h2>
