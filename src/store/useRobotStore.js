@@ -8,6 +8,7 @@ const useRobotStore = create((set) => ({
   missionStatus: 'On Mission 1234',
   isEmergencyStop: false,
   mode: 'AUTO',
+  connectionStatus: 'CONNECTED', // CONNECTED, CONNECTING, DISCONNECTED
   
   toggleEmergencyStop: () => set((state) => {
     const isEStop = !state.isEmergencyStop;
@@ -19,6 +20,20 @@ const useRobotStore = create((set) => ({
   }),
   
   setMode: (mode) => set({ mode }),
+  
+  simulateConnectionDrop: () => {
+    set({ connectionStatus: 'DISCONNECTED', signal: 'Lost' });
+    
+    // Automatically try to reconnect after 3 seconds
+    setTimeout(() => {
+      set({ connectionStatus: 'CONNECTING', signal: 'Weak' });
+      
+      // Successfully reconnect after another 2 seconds
+      setTimeout(() => {
+        set({ connectionStatus: 'CONNECTED', signal: 'Strong' });
+      }, 2000);
+    }, 3000);
+  },
   
   updateTelemetry: (data) => set((state) => ({ ...state, ...data }))
 }));
